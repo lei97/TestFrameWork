@@ -4,23 +4,21 @@ on:
   push:
   pull_request:
 
+
+
 jobs:
-  build: 
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: macOS 10.15
-            os: macos-10.15
-            cmake_generator: Unix Makefiles
-            cmake_build_type: RelWithDebInfo
-            compiler_cache: ccache
-            compiler_cache_path: ~/.ccache
-            cpack_generator: DEB
-            buildenv_basepath: /home/runner/buildenv
-            buildenv_script: tools/debian_buildenv.sh
-            artifacts_name: Ubuntu 18.04 DEB
-            artifacts_path: build/*.deb
-            artifacts_slug: ubuntu-bionic
+  build:
+    #运行系统
+    runs-on: macos-10.15
+    
+    steps:
+    - uses: actions/checkout@v1
+
+    # c++ 测试
+    - name: cmake test
+      run: |
+        mkdir build && cd build
+        cmake ..
+        make
 
 
